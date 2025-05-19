@@ -29,7 +29,7 @@ export default function AppInit() {
       } catch (error) {
         console.error("Failed to fetch user info:", error);
 
-        navigate("/login");
+        // navigate("/login");
       }
     };
 
@@ -40,7 +40,7 @@ export default function AppInit() {
   useEffect(() => {
     if (isInitialized && !loading) {
       if (!isAuthenticated) {
-        navigate("/login");
+        // navigate("/login");
       }
     }
   }, [isAuthenticated, loading, isInitialized, navigate]);
