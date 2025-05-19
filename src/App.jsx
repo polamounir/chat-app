@@ -1,11 +1,13 @@
 import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
-import { Toaster } from 'sonner';
+import { Toaster } from "sonner";
+import AppInit from "./components/AppInit";
 function App() {
   return (
     <BrowserRouter>
-     <Toaster position="top-right" richColors closeButton />
+      <AppInit />
+      <Toaster position="top-right" richColors closeButton />
       <AppRoutes />
     </BrowserRouter>
   );

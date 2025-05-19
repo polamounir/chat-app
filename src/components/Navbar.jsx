@@ -1,16 +1,19 @@
-import { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import {
   Bars3Icon,
   XMarkIcon,
-  ChatBubbleOvalLeftIcon ,
+  ChatBubbleOvalLeftIcon,
   ArrowRightOnRectangleIcon,
-} from '@heroicons/react/24/outline';
+} from "@heroicons/react/24/outline";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { user } = useSelector((state) => state.auth);
+  console.log(user);
 
   // Close mobile menu when route changes
   useEffect(() => {
@@ -27,22 +30,22 @@ const Navbar = () => {
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinks = [
-    { name: 'Home', path: '/' },
+    { name: "Home", path: "/" },
     // { name: 'Features', path: '/features' },
     // { name: 'Pricing', path: '/pricing' },
-    { name: 'About', path: '/about' },
-    { name: 'Friends', path: '/friends' },
+    { name: "About", path: "/about" },
+    { name: "Friends", path: "/friends" },
   ];
 
   return (
     <header
       className={`fixed w-full z-50 transition-all duration-300 ${
-        scrolled ? 'bg-white shadow-sm' : 'bg-white/90 backdrop-blur-sm'
+        scrolled ? "bg-white shadow-sm" : "bg-white/90 backdrop-blur-sm"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -50,8 +53,10 @@ const Navbar = () => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
-              <ChatBubbleOvalLeftIcon  className="h-8 w-8 text-indigo-600" />
-              <span className="ml-2 text-xl font-bold text-gray-800">Dardash</span>
+              <ChatBubbleOvalLeftIcon className="h-8 w-8 text-indigo-600" />
+              <span className="ml-2 text-xl font-bold text-gray-800">
+                Dardash
+              </span>
             </Link>
           </div>
 
@@ -65,8 +70,8 @@ const Navbar = () => {
                   className={({ isActive }) =>
                     `px-3 py-2 rounded-md text-sm font-medium transition-colors ${
                       isActive
-                        ? 'text-indigo-600 bg-indigo-50'
-                        : 'text-gray-700 hover:text-indigo-600 hover:bg-indigo-50'
+                        ? "text-indigo-600 bg-indigo-50"
+                        : "text-gray-700 hover:text-indigo-600 hover:bg-indigo-50"
                     }`
                   }
                 >
@@ -79,18 +84,29 @@ const Navbar = () => {
           {/* Auth Buttons - Desktop */}
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6 space-x-3">
-              <Link
-                to="/login"
-                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600 transition-colors"
-              >
-                Sign in
-              </Link>
-              {/* <Link
-                to="/register"
-                className="px-4 py-2 rounded-md text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 shadow-sm transition-colors"
-              >
-                Get started
-              </Link> */}
+              {user ? (
+                <>
+                  <Link
+                    to="/profile"
+                    className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600 transition-colors"
+                  >
+                    Profile
+                  </Link>
+                  <Link
+                    to="/logout"
+                    className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600 transition-colors"
+                  >
+                    Logout
+                  </Link>
+                </>
+              ) : (
+                <Link
+                  to="/login"
+                  className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-indigo-600 transition-colors"
+                >
+                  Sign in
+                </Link>
+              )}
             </div>
           </div>
 
@@ -114,7 +130,9 @@ const Navbar = () => {
       {/* Mobile Navigation */}
       <div
         className={`md:hidden transition-all duration-300 ease-in-out ${
-          isOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0 overflow-hidden'
+          isOpen
+            ? "max-h-screen opacity-100"
+            : "max-h-0 opacity-0 overflow-hidden"
         }`}
       >
         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t">
@@ -125,8 +143,8 @@ const Navbar = () => {
               className={({ isActive }) =>
                 `block px-3 py-2 rounded-md text-base font-medium transition-colors ${
                   isActive
-                    ? 'text-indigo-600 bg-indigo-50'
-                    : 'text-gray-700 hover:text-indigo-600 hover:bg-indigo-50'
+                    ? "text-indigo-600 bg-indigo-50"
+                    : "text-gray-700 hover:text-indigo-600 hover:bg-indigo-50"
                 }`
               }
             >
@@ -135,13 +153,36 @@ const Navbar = () => {
           ))}
 
           <div className="pt-4 border-t mt-2">
-            <Link
-              to="/login"
-              className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
-            >
-              <ArrowRightOnRectangleIcon className="h-5 w-5 mr-2" />
-              Sign in
-            </Link>
+            {user ? (
+              <>
+                <Link
+                  to="/profile"
+                  className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+                >
+                  Profile
+              
+
+                  </Link>
+              <Link
+                to="/logout"
+                className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+              >
+                <ArrowRightOnRectangleIcon className="h-5 w-5 mr-2" />
+                Logout
+              </Link>
+              </>
+            ) : (
+              <>
+              <Link
+                to="/login"
+                className="flex items-center px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 transition-colors"
+              >
+                <ArrowRightOnRectangleIcon className="h-5 w-5 mr-2" />
+                Sign in
+              </Link>
+              </>
+            )}
+
             {/* <Link
               to="/register"
               className="flex items-center px-3 py-2 rounded-md text-base font-medium text-white bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 mt-2 shadow-sm transition-colors"

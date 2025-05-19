@@ -13,6 +13,7 @@ import {
 } from "@heroicons/react/24/outline";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { loginUser } from "../api/user";
 
 function Input({
   label,
@@ -96,32 +97,20 @@ export default function Login() {
     setError("");
     setSuccess("");
     setIsSubmitting(true);
+    const response = await loginUser(formData);
+    console.log(response);
 
-    try {
-      const response = await axios.post(
-        "http://localhost:3000/api/auth/login",
-        {
-          email: formData.email,
-          password: formData.password,
-        }
-      );
+  
+    if (response.error) {
+      setError(response.error);
+      toast.error(response.message);
+    } else {
+      setSuccess("Login successful!");
+      toast.success(response.message);
 
-      setSuccess("Login successful! Redirecting...");
-      toast.success("Login successful! Redirecting...");
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
-
-      console.log(response.data);
-    } catch (err) {
-      setError(
-        err.response?.data?.data?.message ||
-          "Login failed. Please check your credentials."
-      );
-      toast.error(err.response?.data?.data?.message || "Login failed. Please check your credentials.");
-    } finally {
-      setIsSubmitting(false);
+      navigate("/");
     }
+        setIsSubmitting(false);
   };
 
   return (
