@@ -12,17 +12,17 @@ import {
 const Friends = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [friendRequests, setFriendRequests] = useState([
-    { id: 1, name: 'Alex Johnson', avatar: null },
-    { id: 2, name: 'Sam Wilson', avatar: null },
-    { id: 3, name: 'Taylor Swift', avatar: null },
+    { id: 1, name: 'user1', avatar: null },
+    { id: 2, name: 'user2', avatar: null },
+    { id: 3, name: 'user3', avatar: null },
   ]);
 
   const [friends, setFriends] = useState([
-    { id: 4, name: 'Jamie Smith', avatar: null, status: 'online', lastSeen: null },
-    { id: 5, name: 'Morgan Lee', avatar: null, status: 'online', lastSeen: null },
-    { id: 6, name: 'Casey Jordan', avatar: null, status: 'offline', lastSeen: '2h ago' },
-    { id: 7, name: 'Riley Taylor', avatar: null, status: 'offline', lastSeen: '5h ago' },
-    { id: 8, name: 'Jordan Parker', avatar: null, status: 'online', lastSeen: null },
+    { id: 4, name: 'user4', avatar: null, status: 'online', lastSeen: null },
+    { id: 5, name: 'user5', avatar: null, status: 'online', lastSeen: null },
+    { id: 6, name: 'user6', avatar: null, status: 'offline', lastSeen: '2h ago' },
+    { id: 7, name: 'user7', avatar: null, status: 'offline', lastSeen: '5h ago' },
+    { id: 8, name: 'user8', avatar: null, status: 'online', lastSeen: null },
   ]);
 
   const handleAcceptRequest = (id) => {
