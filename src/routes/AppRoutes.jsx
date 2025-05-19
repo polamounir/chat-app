@@ -6,7 +6,7 @@ import Home from "../pages/Home";
 import Navbar from "../components/Navbar";
 import About from "../pages/About";
 import Friends from "../pages/Friends";
-import NotFound from "../pages/Notfound";
+import NotFoundPage from "../pages/NotFoundPage";
 
 export default function AppRoutes() {
   return (
@@ -20,7 +20,7 @@ export default function AppRoutes() {
           <Route path="/about" element={<About />} />
           <Route path="/friends" element={<Friends />} />
 
-          <Route path="*" element={<NotFound />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </>

@@ -2,7 +2,7 @@ import React from 'react';
 import { ExclamationTriangleIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 import { useNavigate } from 'react-router-dom';
 
-export default function NotFound() {
+export default function NotFoundPage() {
   const navigate = useNavigate();
 
   return (
