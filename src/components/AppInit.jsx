@@ -19,7 +19,7 @@ export default function AppInit() {
       const refreshToken = Cookies.get("refreshToken");
 
       if (!accessToken && !refreshToken) {
-        navigate("/login");
+        // navigate("/login");
         return;
       }
 
