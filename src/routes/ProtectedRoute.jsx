@@ -20,6 +20,7 @@ export default function ProtectedRoute({ children }) {
     checkUser();
   }, []);
 
-  if (!authChecked) return null;
-  return isAuthenticated ? children : <Navigate to="/login" />;
+//   if (!authChecked) return null;
+//   return isAuthenticated ? children : <Navigate to="/login" />;
+return  ;
 }
