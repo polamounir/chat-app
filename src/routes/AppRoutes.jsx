@@ -15,8 +15,10 @@ export default function AppRoutes() {
 
   return (
     <>
+    <div className="flex flex-col lg:flex-row min-h-screen ">
+
       <Navbar />
-      <div className="bg-gradient-to-br from-blue-50 to-indigo-50 min-h-screen p-4 py-20 ">
+      <div className="bg-gradient-to-br from-indigo-50 to-indigo-50 min-h-screen p-4 pt-20 lg:py-4 flex-1 ">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -27,6 +29,7 @@ export default function AppRoutes() {
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
+    </div>
     </>
   );
 }

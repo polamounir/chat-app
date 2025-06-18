@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   UserCircleIcon,
   CheckIcon,
@@ -6,50 +6,83 @@ import {
   MagnifyingGlassIcon,
   EllipsisVerticalIcon,
   UserPlusIcon,
-  UserGroupIcon
-} from '@heroicons/react/24/outline';
-
+  UserGroupIcon,
+} from "@heroicons/react/24/outline";
+import AddFriendModal from "../components/friends/AddFriendModel";
+import { useSelector } from "react-redux";
+import { useQuery } from "@tanstack/react-query";
+import { getFriends, getFriendsRequests } from "../api/friend";
 const Friends = () => {
-  const [searchQuery, setSearchQuery] = useState('');
+  const user = useSelector((state) => state.auth.user)
+
+  const {data:friendRequestsData , loading:friendRequestsLoading , error:friendRequestsError} = useQuery({
+    queryKey: ["friendsRequests"],
+    queryFn: () => getFriendsRequests()
+  })
+  const friendsRequests = friendRequestsData?.data?.data||[]
+  console.log(friendsRequests)
+
+  const {data:friendss , loading:friendsLoading , error:friendsError} = useQuery({
+    queryKey: ["friends"],
+    queryFn: () => getFriends()
+  })
+  const friends = friendss?.data?.data||[]
+  console.log(friends)
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isAddFriendModalOpen, setIsAddFriendModalOpen] = useState(false);
   const [friendRequests, setFriendRequests] = useState([
-    { id: 1, name: 'user1', avatar: null },
-    { id: 2, name: 'user2', avatar: null },
-    { id: 3, name: 'user3', avatar: null },
+    { id: 1, name: "user1", avatar: null },
+    { id: 2, name: "user2", avatar: null },
+    { id: 3, name: "user3", avatar: null },
   ]);
 
-  const [friends, setFriends] = useState([
-    { id: 4, name: 'user4', avatar: null, status: 'online', lastSeen: null },
-    { id: 5, name: 'user5', avatar: null, status: 'online', lastSeen: null },
-    { id: 6, name: 'user6', avatar: null, status: 'offline', lastSeen: '2h ago' },
-    { id: 7, name: 'user7', avatar: null, status: 'offline', lastSeen: '5h ago' },
-    { id: 8, name: 'user8', avatar: null, status: 'online', lastSeen: null },
-  ]);
 
   const handleAcceptRequest = (id) => {
-    const request = friendRequests.find(req => req.id === id);
+    const request = friendRequests.find((req) => req.id === id);
     if (request) {
-      setFriends(prev => [...prev, { ...request, status: 'online', lastSeen: null }]);
-      setFriendRequests(prev => prev.filter(req => req.id !== id));
+      setFriends((prev) => [
+        ...prev,
+        { ...request, status: "online", lastSeen: null },
+      ]);
+      setFriendRequests((prev) => prev.filter((req) => req.id !== id));
     }
   };
 
   const handleDeclineRequest = (id) => {
-    setFriendRequests(prev => prev.filter(req => req.id !== id));
+    setFriendRequests((prev) => prev.filter((req) => req.id !== id));
   };
 
-  const filteredFriends = friends.filter(friend =>
+  const filteredFriends = friends.filter((friend) =>
     friend.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   return (
     <div className="py-8 px-4 sm:px-6 lg:px-8">
+      <AddFriendModal
+        isOpen={isAddFriendModalOpen}
+        onClose={() => setIsAddFriendModalOpen(false)}
+        onSendRequest={(userId) => {
+          console.log(`Friend request sent to user ${userId}`);
+        }}
+      />
       <div className="max-w-3xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">Friends</h1>
-          <div className="flex items-center text-sm text-gray-500">
-            <UserGroupIcon className="h-5 w-5 mr-1" />
-            <span>{friends.length} friends</span>
+        <div className="mb-8 flex justify-between items-center">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800 mb-2">Friends</h1>
+            <div className="flex items-center text-sm text-gray-500">
+              <UserGroupIcon className="h-5 w-5 mr-1" />
+              <span>{user?.friends?.length} friends</span>
+            </div>
+          </div>
+          <div>
+            <button
+              onClick={() => setIsAddFriendModalOpen(true)}
+              className="bg-indigo-500 text-white px-4 py-2 rounded-md"
+            >
+              Add Friend
+            </button>
           </div>
         </div>
 
@@ -61,31 +94,33 @@ const Friends = () => {
           <input
             type="text"
             placeholder="Search friends..."
-            className="block w-full pl-10 pr-3 py-2.5 border bg-gray-50 border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-150"
+            className="block w-full pl-10 pr-3 py-2.5 border bg-gray-50 border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all duration-150"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
 
         {/* Friend Requests Section */}
-        {friendRequests.length > 0 && (
+        {friendsRequests.length > 0 && (
           <div className="mb-8">
             <h2 className="text-lg font-semibold text-gray-800 mb-4 flex items-center">
               <UserPlusIcon className="h-5 w-5 text-indigo-600 mr-2" />
-              Friend Requests ({friendRequests.length})
+              Friend Requests ({friendsRequests.length})
             </h2>
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-              {friendRequests.map((request) => (
+              {friendsRequests.map((request) => (
                 <div
                   key={request.id}
                   className="p-4 border-b border-gray-100 last:border-b-0"
                 >
                   <div className="flex items-center">
                     <div className="flex-shrink-0 mr-4">
-                      {request.avatar ? (
+                      {request.profilePicture ? (
                         <img
-                          className="h-10 w-10 rounded-full"
-                          src={request.avatar}
+                          className="rounded-full"
+                          src={request.profilePicture}
+                          width={40}
+                          height={40}
                           alt=""
                         />
                       ) : (
@@ -96,7 +131,6 @@ const Friends = () => {
                       <p className="text-sm font-medium text-gray-800 truncate">
                         {request.name}
                       </p>
-                  
                     </div>
                     <div className="ml-4 flex space-x-2">
                       <button
@@ -138,15 +172,17 @@ const Friends = () => {
             <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
               {filteredFriends.map((friend) => (
                 <div
-                  key={friend.id}
+                  key={friend._id}
                   className="p-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors"
                 >
                   <div className="flex items-center">
                     <div className="flex-shrink-0 mr-4 relative">
-                      {friend.avatar ? (
+                      {friend.profilePicture ? (
                         <img
-                          className="h-10 w-10 rounded-full"
-                          src={friend.avatar}
+                          className="rounded-full"
+                          src={friend.profilePicture}
+                          width={40}
+                          height={40}
                           alt=""
                         />
                       ) : (

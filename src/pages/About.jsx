@@ -178,7 +178,7 @@ export default function AboutPage() {
           </p>
           <Link
             to="/register"
-            className="px-6 py-3 rounded-lg text-white bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 shadow-sm font-medium transition-colors"
+            className="px-6 py-3 rounded-lg text-white bg-gradient-to-r from-indigo-600 to-indigo-600 hover:from-indigo-700 hover:to-indigo-700 shadow-sm font-medium transition-colors"
           >
             Sign Up Now
           </Link>

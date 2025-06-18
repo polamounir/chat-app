@@ -48,9 +48,9 @@ function Input({
           onBlur={onBlur}
           className={`w-full ${Icon ? "pl-10" : "pl-4"} pr-10 py-2.5 border ${
             isActive
-              ? "border-blue-500 ring-2 ring-blue-100"
+              ? "border-indigo-500 ring-2 ring-indigo-100"
               : "border-gray-300"
-          } rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all duration-150`}
+          } rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 transition-all duration-150`}
         />
         {showPasswordToggle && (
           <button
@@ -117,8 +117,8 @@ export default function Login() {
     <div className="flex items-center justify-center pt-10">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
         <div className="text-center mb-8">
-          <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
-            <UserCircleIcon className="h-6 w-6 text-blue-600" />
+          <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 mb-4">
+            <UserCircleIcon className="h-6 w-6 text-indigo-600" />
           </div>
           <h1 className="text-3xl font-bold text-gray-800">Welcome back</h1>
           <p className="text-gray-500 mt-2">Sign in to your account</p>
@@ -172,7 +172,7 @@ export default function Login() {
                 id="remember-me"
                 name="remember-me"
                 type="checkbox"
-                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
               />
               <label
                 htmlFor="remember-me"
@@ -185,7 +185,7 @@ export default function Login() {
             <div className="text-sm">
               <a
                 href="#"
-                className="font-medium text-blue-600 hover:text-blue-500"
+                className="font-medium text-indigo-600 hover:text-indigo-500"
               >
                 Forgot password?
               </a>
@@ -196,7 +196,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 ${
+              className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-indigo-600 hover:from-indigo-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 ${
                 isSubmitting ? "opacity-80 cursor-not-allowed" : ""
               }`}
             >
@@ -273,7 +273,7 @@ export default function Login() {
             Don't have an account?{" "}
             <Link
               to="/register"
-              className="font-medium text-blue-600 hover:text-blue-500 transition-colors duration-200"
+              className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200"
             >
               Sign up
             </Link>

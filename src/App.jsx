@@ -3,7 +3,10 @@ import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/AppRoutes";
 import { Toaster } from "sonner";
 import AppInit from "./components/AppInit";
+
+
 function App() {
+
   return (
     <BrowserRouter>
       <AppInit />

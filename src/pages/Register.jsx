@@ -33,8 +33,8 @@ function Input({ label, type = "text", name, value, onChange, onFocus, onBlur, i
           onFocus={onFocus}
           onBlur={onBlur}
           className={`w-full ${Icon ? 'pl-10' : 'pl-4'} pr-10 py-2.5 border ${
-            isActive ? 'border-blue-500 ring-2 ring-blue-100' : 'border-gray-300'
-          } rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-500 transition-all duration-150`}
+            isActive ? 'border-indigo-500 ring-2 ring-indigo-100' : 'border-gray-300'
+          } rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-100 focus:border-indigo-500 transition-all duration-150`}
         />
         {showPasswordToggle && (
           <button
@@ -106,6 +106,7 @@ export default function Register() {
     submitData.append('name', formData.name);
     submitData.append('email', formData.email);
     submitData.append('password', formData.password);
+    submitData.append('username', formData.username);
     submitData.append('bio', formData.bio);
     if (formData.profilePicture) {
       submitData.append('profilePicture', formData.profilePicture);
@@ -117,6 +118,7 @@ export default function Register() {
       setFormData({
         name: '',
         email: '',
+        username: '',
         password: '',
         confirmPassword: '',
         bio: '',
@@ -141,10 +143,12 @@ export default function Register() {
     <div className="flex items-center justify-center pt-10">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
         <div className="text-center mb-8">
-          <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 mb-4">
-            <UserCircleIcon className="h-6 w-6 text-blue-600" />
+          <div className="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 mb-4">
+            <UserCircleIcon className="h-6 w-6 text-indigo-600" />
           </div>
-          <h1 className="text-3xl font-bold text-gray-800">Create your account</h1>
+          <h1 className="text-3xl font-bold text-gray-800">
+            Create your account
+          </h1>
           <p className="text-gray-500 mt-2">Join our community today</p>
         </div>
 
@@ -154,7 +158,7 @@ export default function Register() {
             <div>{error}</div>
           </div>
         )} */}
-{/* 
+        {/* 
         {success && (
           <div className="mb-6 p-4 bg-green-50 text-green-600 text-sm rounded-lg border border-green-100 flex items-start">
             <CheckCircleIcon className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" />
@@ -169,9 +173,9 @@ export default function Register() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              onFocus={() => setActiveField('name')}
+              onFocus={() => setActiveField("name")}
               onBlur={() => setActiveField(null)}
-              isActive={activeField === 'name'}
+              isActive={activeField === "name"}
               Icon={UserIcon}
             />
             <Input
@@ -180,9 +184,20 @@ export default function Register() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              onFocus={() => setActiveField('email')}
+              onFocus={() => setActiveField("email")}
               onBlur={() => setActiveField(null)}
-              isActive={activeField === 'email'}
+              isActive={activeField === "email"}
+              Icon={EnvelopeIcon}
+            />
+            <Input
+              label="username"
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              onFocus={() => setActiveField("username")}
+              onBlur={() => setActiveField(null)}
+              isActive={activeField === "username"}
               Icon={EnvelopeIcon}
             />
             <Input
@@ -191,9 +206,9 @@ export default function Register() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              onFocus={() => setActiveField('password')}
+              onFocus={() => setActiveField("password")}
               onBlur={() => setActiveField(null)}
-              isActive={activeField === 'password'}
+              isActive={activeField === "password"}
               Icon={LockClosedIcon}
               showPasswordToggle={true}
               onTogglePassword={togglePasswordVisibility}
@@ -204,9 +219,9 @@ export default function Register() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              onFocus={() => setActiveField('confirmPassword')}
+              onFocus={() => setActiveField("confirmPassword")}
               onBlur={() => setActiveField(null)}
-              isActive={activeField === 'confirmPassword'}
+              isActive={activeField === "confirmPassword"}
               Icon={LockClosedIcon}
               showPasswordToggle={true}
               onTogglePassword={toggleConfirmPasswordVisibility}
@@ -214,7 +229,9 @@ export default function Register() {
           </div>
 
           <div className="pt-2">
-            <label className="block text-sm font-medium text-gray-700 mb-2">Profile Picture (optional)</label>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Profile Picture (optional)
+            </label>
             <div className="flex items-center space-x-4 justify-between">
               <div className="flex-shrink-0 h-16 w-16 rounded-full overflow-hidden bg-gray-100 border-2 border-white shadow-sm ">
                 {formData.profilePicture ? (
@@ -240,15 +257,17 @@ export default function Register() {
                 </span>
               </label>
             </div>
-            <p className="mt-1 text-xs text-gray-500">PNG, JPG, GIF up to 5MB</p>
+            <p className="mt-1 text-xs text-gray-500">
+              PNG, JPG, GIF up to 5MB
+            </p>
           </div>
 
           <div className="pt-2">
             <button
               type="submit"
               disabled={isSubmitting}
-              className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 ${
-                isSubmitting ? 'opacity-80 cursor-not-allowed' : ''
+              className={`w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-gradient-to-r from-indigo-600 to-indigo-600 hover:from-indigo-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all duration-200 ${
+                isSubmitting ? "opacity-80 cursor-not-allowed" : ""
               }`}
             >
               {isSubmitting ? (
@@ -258,7 +277,14 @@ export default function Register() {
                   fill="none"
                   viewBox="0 0 24 24"
                 >
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
                   <path
                     className="opacity-75"
                     fill="currentColor"
@@ -268,15 +294,18 @@ export default function Register() {
               ) : (
                 <LockOpenIcon className="w-4 h-4 mr-2" />
               )}
-              {isSubmitting ? 'Creating account...' : 'Register'}
+              {isSubmitting ? "Creating account..." : "Register"}
             </button>
           </div>
         </form>
 
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-600">
-            Already have an account?{' '}
-            <Link to="/login" className="font-medium text-blue-600 hover:text-blue-500 transition-colors duration-200">
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200"
+            >
               Sign in
             </Link>
           </p>
