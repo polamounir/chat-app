@@ -3,7 +3,7 @@ import Cookies from "js-cookie";
 
 export const loginUser = async (formData) => {
   try {
-    const { data } = await api.post("https://chat-app-sever-production.up.railway.app/api/auth/login", {
+    const { data } = await api.post("/auth/login", {
       email: formData.email,
       password: formData.password,
     });
